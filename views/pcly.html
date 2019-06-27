@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>[{{.__date}}]校园食材二维码溯源公示信息</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="/js/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="/js/weui/lib/weui.min.css">
+    <link rel="stylesheet" href="/js/weui/css/jquery-weui.css">
+    <style>
+        body{background:#fff;}
+        .clearfix{*zoom:1}
+        .clearfix:after{content:'\20';display:block;clear:both;height:0;overflow:hidden;}
+      ul li{list-style:none;}
+        .fl{float:left;}
+        .fr{float:right;}
+        .fullImg{width:100%;}
+        .fixed{position:fixed;z-index:1000;}
+        .black{background: rgba(0, 0, 0, 0.7);}
+        .borderb{border-bottom:1px solid #eae9e9;}
+        .header_top .weui-cells{margin-top:0;}
+      .main{max-width:640px;margin:0 auto;padding-top:50px;}
+        
+            .close{margin:0 auto;margin-top:15px;width:45px;display:block;}
+            
+
+            .xinxi{top:0;left:0;right:0;bottom:0;}
+            .xxcon{padding-bottom:10px;border-radius:3px;background:#fff;width:90%;margin:0 auto;margin-top:10%;}
+            .xxcon .title{background:#01bf67;padding:8px 0;font-size:19px;border-radius:3px 3px 0 0 ;color:#fff;text-align:center;font-weight:bold;}
+            .xxcon .weui-cells {margin-top:0;margin-bottom:5px;}
+            .xxcon .weui-cells:after, .xxcon .weui-cells:before{border:none;}
+            .xxcon .weui-label{color:#666666;width: 85px;}
+            .returnT{width:100%;top:0;left:0;right:0;}
+        .returnT_con{background:#fff;padding:10px;position:relative;}
+        .returnT_con .renturn{position:absolute;left:10px;top:14px;}
+        .returnT_con .renturn img{width:20px;}
+        .returnT_con p{color:#494949;text-align:center;font-size:17px;letter-spacing:1px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;word-break: break-all; }
+
+            .dpmc{color:#009a44;font-size:20px; letter-spacing:1px; font-weight:bold;padding:10px 15px;}
+            .tb{width:100%;color:#666666;font-size:14px;}
+            .tb th{background:#f0f0f0;font-weight:normal;padding:8px 0;}
+            .tb .tr td{padding:10px 0;text-align:center;color:#888888;}
+            .tb tbody .tr:nth-child(2n) .td{background:#f5f5f5;}
+            .ckxq{background:#009a44;color:#fff;border-radius:3px;padding:5px 8px;}
+            .clickMore{color:#999999;font-size:14px;text-align:center;margin-top:10px;}
+            .clickMore span{/*text-decoration:underline;*/}
+
+			.weui-cell-a{padding:5px 15px;}
+			.main .weui-cells{font-size:14px;}
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="returnT fixed borderb">
+                <div class="returnT_con">
+                    <a href="/p/page?code={{.code}}" class="renturn"><img src="/images/suyuan/return1.png"></a>
+                    <p>菜品留样</p>
+                </div>
+            </div>
+            <div class="dpmc" style="display:none;">
+                <p style="text-align:center;"></p>
+            </div>
+            <div class="table">
+                <table class="tb" cellspacing="0">
+                    <thead>
+                        <th>日期&nbsp;&nbsp;</th>
+                        <th>餐次</th>
+                        <th>菜品</th>
+                        <th>操作</th>
+                    </thead>
+                    <tr class="tr"  v-for="row,index in list"  :key="row.id">
+                        <td v-text="row.mealtimes_date">-</td>
+                        <td v-text="row.mealtimes_name">-</td>
+                        <td v-text="row.food_name">-</td>
+                        <td>
+                            <span class="ckxq" @click="detail(index)">查看</span>
+							 <span class="ckxq" @click="suyuan(index)">溯源</span>
+                        </td>
+                    </tr>
+                </table>
+                <p class="clickMore" @click="more">
+                    <span v-text="pagemsg">点击查看更多</span>
+                </p>
+				<p>&nbsp;</p>
+            </div>
+
+ <!--信息-->
+        <div class="fixed black xinxi toast" style="display:none;">
+            <div class="xxcon">
+                <p class="title">详细信息</p>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell weui-cell-a">
+                        <div class="weui-cell__hd"><label class="weui-label">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</label></div>
+                        <div class="weui-cell__bd">
+                            <span v-text="m.mealtimes_date">-</span>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell-a">
+                        <div class="weui-cell__hd"><label class="weui-label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label></div>
+                        <div class="weui-cell__bd">
+                            <span v-text="m.food_name">-</span>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell-a">
+                        <div class="weui-cell__hd"><label class="weui-label">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</label></div>
+                        <div class="weui-cell__bd">
+                            <span v-text="m.squality">-</span>
+                        </div>
+                    </div>
+					<div class="weui-cell weui-cell-a">
+                        <div class="weui-cell__hd"><label class="weui-label">留样人</label></div>
+                        <div class="weui-cell__bd">
+                            <span v-text="m.sman_name">-</span>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell-a">
+                        <div class="weui-cell__hd"><label class="weui-label">留样图片</label></div>
+                        <div class="weui-cell__bd">
+                            <img v-bind:src="m.spic" style="width:200px;"   class="fullImg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="/images/suyuan/dpxq/close.png" @click="detail_hide()" class="close">
+        </div>
+
+
+        </div> 
+       
+    <script src="/js/swiper/js/swiper.min.js"></script>
+    <script src="/js/weui/js/jquery-weui.min.js"></script>
+    <script>
+        $(function(){
+        })
+
+	var v=new Vue({
+    el: '.main',
+    data: {
+		list:[],
+		page:1,
+		isshow:0,
+		m:{},
+		pagemsg:"点击查看更多"
+    },
+    methods:{
+		detail(i){
+			var $this=this;
+			$this.isshow=1;
+			$this.m=$this.list[i];
+			$('.xinxi').fadeIn();
+		},
+		suyuan(i){
+			var $this=this;
+			$this.isshow=1;
+			$this.m=$this.list[i];
+			window.location='/p/page/vsample?code={{.code}}&companies_id='+$this.m.companies_id+'&mealtimes_name='+$this.m.mealtimes_name+'&mealtimes_date='+$this.m.mealtimes_date+'&foods_id='+$this.m.food_id;
+		},
+		detail_hide(){
+			this.isshow=0;
+			$('.xinxi').fadeOut();
+		},
+		more(){
+			var $this=this;
+			if($this.pagemsg=="没有更多数据"){
+				return;
+			}
+			
+			jQuery.get('/api/m/sample?code={{.code}}&_pagesize=20&_page='+$this.page,function(data){
+				for(var i=0;i<data.rows.length;i++){
+					$this.list.push(data.rows[i]);
+				}
+				if($this.page>=data.pages){
+					$this.pagemsg="没有更多数据";
+				}else{
+					$this.page++;
+				}
+			});
+		}
+    },
+	created(){
+
+	},
+	mounted(){
+		var $this=this;
+		$this.more();
+	}
+})
+    </script>
+</body>
+</html>

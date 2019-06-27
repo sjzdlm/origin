@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>校园食材二维码溯源公示信息</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" href="/js/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="/js/weui/lib/weui.min.css">
+    <link rel="stylesheet" href="/js/weui/css/jquery-weui.css">
+    <style>
+        body{background:#fff;}
+        .clearfix{*zoom:1}
+        .clearfix:after{content:'\20';display:block;clear:both;height:0;overflow:hidden;}
+      ul li{list-style:none;}
+        .fl{float:left;}
+        .fr{float:right;}
+        .fullImg{width:100%;}
+        .fixed{position:fixed;z-index:1000;}
+        .black{background: rgba(0, 0, 0, 0.7);}
+        .borderb{border-bottom:1px solid #eae9e9;}
+        .redColor{color:red;}
+      .main{max-width:640px;margin:0 auto;padding-top:50px;}
+        
+            .close{margin:0 auto;margin-top:15px;width:45px;display:block;}
+            
+
+            .xinxi{top:0;left:0;right:0;bottom:0;}
+            .xxcon{padding-bottom:10px;border-radius:3px;background:#fff;width:90%;margin:0 auto;margin-top:10%;}
+            .xxcon .title{background:#01bf67;padding:8px 0;font-size:19px;border-radius:3px 3px 0 0 ;color:#fff;text-align:center;font-weight:bold;}
+            .xxcon .weui-cells {margin-top:0;margin-bottom:5px;}
+            .xxcon .weui-cells:after, .xxcon .weui-cells:before{border:none;}
+            .xxcon .weui-label{color:#666666;width: 85px;}
+            .returnT{width:100%;top:0;}
+        .returnT_con{background:#fff;padding:10px;position:relative;}
+        .returnT_con .renturn{position:absolute;left:10px;top:14px;}
+        .returnT_con .renturn img{width:20px;}
+        .returnT_con p{color:#494949;text-align:center;font-size:17px;letter-spacing:1px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;word-break: break-all; }
+
+            .dpmc{position:relative;color:#fff;font-size:20px; letter-spacing:1px; font-weight:bold;}
+            .dpmc img{display:block;}
+            .dpmc p{position:absolute;left:5%;bottom:25%;}
+            .cdgs_data{padding:10px;}
+            .cdgs_data p{display:flex;align-items:center;color:#4e4e4e;}
+            .cdgs_data p img{width:25px;margin-right:5px;}
+        .caidan{background:#fcfcfc;padding:10px;}
+        .cd_box{margin-bottom:10px;}
+        .cd_box .title{position:relative;text-align:center;}
+        .cd_box .title img{width:100%;}
+        .cd_box .title span{position:absolute;left:11px;top:-4px;right:0;color:#4e4e4e;font-size:17px;}
+        .cd_box ul li{float:left;width:48%;margin-bottom:10px;}
+        .cd_box ul li:nth-child(2n){float:right;}
+        .cd_box ul li img{width:100%;border-radius:5px;}
+        .cd_box ul li p{color:#919191;font-size:16px;text-align:center;}
+
+           
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="returnT fixed borderb">
+                <div class="returnT_con">
+                    <a href="/p/page?code={{.code}}" class="renturn"><img src="/images/suyuan/return1.png"></a>
+                    <p>菜单公示</p>
+                </div>
+            </div>
+            <div class="dpmc" style="display:none;">
+                <img src="/images/suyuan/cdgs/bg.jpg" class="fullImg">
+                <p>{{.m.name}}</p>
+            </div>
+
+<div id="list">
+
+</div>
+
+        </div> 
+        
+    <script src="/js/swiper/js/swiper.min.js"></script>
+    <script src="/js/weui/js/jquery-weui.min.js"></script>
+    <script>
+$(function(){
+	$('#list').load('/suyuan/dishes?code={{.code}}');
+});
+    </script>
+</body>
+</html>
